@@ -7,7 +7,7 @@ CREATE TABLE users (
 );
 
 -- Knowledge Pages Table
-CREATE TABLE knowledge_pages (
+CREATE TABLE articles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
   content TEXT,
