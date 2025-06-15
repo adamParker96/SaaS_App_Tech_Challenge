@@ -1,1 +1,1 @@
-Hello
+The backend of this app is comprised of four services - Auth, File, Article, and User. They should all be hosted on seperate ECS containers within the same ECS cluster, allowing us to scale easily and affordably.
