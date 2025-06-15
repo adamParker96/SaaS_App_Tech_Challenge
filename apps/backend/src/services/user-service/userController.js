@@ -1,6 +1,25 @@
 const User = require('../models/userModel');
 const cache = require('../cache');
 
+async function getAllUsers(req, res) {
+
+  
+  // Try cache first
+  let user = await cache.get(`user:all`);
+  if (user) {
+    return res.json(JSON.parse(user));
+  }
+
+  user = await User.getAllUsers();
+  if (!user) return res.status(404).json({ error: 'Users not found' });
+
+  // Cache users
+  await cache.set(`user:all`, JSON.stringify(user), { EX: 3600 }); // 1 hour expiry
+
+  res.json(user);
+}
+
+
 async function getUserByID(req, res) {
   const { id } = req.params;
   
