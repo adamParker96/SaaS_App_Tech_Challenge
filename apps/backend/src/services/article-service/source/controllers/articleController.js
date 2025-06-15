@@ -1,4 +1,4 @@
-//  This microservice controls access to Articles
+//  This script controls access to Articles
 
 const pool = require('../config/db');
 const redis = require('../config/redis');
