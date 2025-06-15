@@ -1,67 +1,30 @@
-const User = require('../models/userModel');
-const cache = require('../cache');
+const db = require('../db');
 
-async function getUserByID(req, res) {
-  const { id } = req.params;
-  
-  // Try cache first
-  let user = await cache.get(`user:${id}`);
-  if (user) {
-    return res.json(JSON.parse(user));
-  }
-
-  user = await User.getUserById(id);
-  if (!user) return res.status(404).json({ error: 'User not found' });
-
-  // Cache user
-  await cache.set(`user:${id}`, JSON.stringify(user), { EX: 3600 }); // 1 hour expiry
-
-  res.json(user);
+async function getAllUsers() {
+  const { rows } = await db.query('SELECT * FROM users ORDER BY created_at DESC');
+  return rows;
 }
 
-async function getUserByName(req, res) {
-  const { name } = req.params;
-  
-  // Try cache first
-  let user = await cache.get(`user:${name}`);
-  if (user) {
-    return res.json(JSON.parse(user));
-  }
-
-  user = await User.getUserById(id);
-  if (!user) return res.status(404).json({ error: 'User not found' });
-
-  // Cache user
-  await cache.set(`user:${id}`, JSON.stringify(user), { EX: 3600 }); // 1 hour expiry
-
-  res.json(user);
+async function getUserByID(id) {
+  const { rows } = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+  return rows[0];
 }
 
-async function createUser(req, res) {
-  try {
-    const user = await User.createUser(req.body);
-    res.status(201).json(user);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
+async function getUserByName(name){
+  const { rows } = await db.query('SELECT * FROM users WHERE id = $1', [title]);
+  return rows[0];
 }
 
-async function deleteUser(req, res) {
-  try {
-    const user = await User.deleteUser(req.id);
-    res.status(201).json(user);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
+async function createUser({ name, id, email}) {
+  const { rows } = await db.query(
+    'INSERT INTO users (name, id, email) VALUES ($1, $2, $3) RETURNING *',
+    [name, id, email]
+  );
+  return rows[0];
 }
 
-async function updateUser(req, res) {
-  try {
-    const user = await User.updateUser(req.body);
-    res.status(201).json(user);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
+async function deleteUser(id) {
+  await db.query('DELETE FROM users WHERE id = $1', [id]);
 }
 
-module.exports = { getUserByID, getUserByName, createUser, deleteUser, updateUser };
+module.exports = { getAllUsers, getUserByID, getUserByName, createUser, deleteUser, updateUser };
