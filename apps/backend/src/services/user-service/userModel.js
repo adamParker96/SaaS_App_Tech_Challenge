@@ -11,7 +11,7 @@ async function getUserByID(id) {
 }
 
 async function getUserByName(name){
-  const { rows } = await db.query('SELECT * FROM users WHERE id = $1', [title]);
+  const { rows } = await db.query('SELECT * FROM users WHERE id = $1', [name]);
   return rows[0];
 }
 
