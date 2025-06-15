@@ -1,1 +1,1 @@
-
+Our backend is comprised of four dockerised microservices sitting within an ECS cluster.
