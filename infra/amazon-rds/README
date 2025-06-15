@@ -1,0 +1,1 @@
+Since our backend is hosted in ECS, we can use Amazon RDS to create a PostgreSQL instance and connect it to the same VPC that our ECS cluster is using.
