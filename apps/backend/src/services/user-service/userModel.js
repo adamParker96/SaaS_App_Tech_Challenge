@@ -20,7 +20,7 @@ async function getUserByID(req, res) {
 }
 
 async function getUserByName(req, res) {
-  const { id } = req.params;
+  const { name } = req.params;
   
   // Try cache first
   let user = await cache.get(`user:${name}`);
