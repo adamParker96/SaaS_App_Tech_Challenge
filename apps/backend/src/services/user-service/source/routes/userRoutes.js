@@ -6,7 +6,7 @@ const validateAndSanitize = require('../validationSanitation/validateSanitize');
 
 router.post(
   '/create',
-  validateSanitize(createUserSchema, { sanitize: ['email'] }),
+  validateSanitize(createUserSchema, { sanitize: ['name, email'] }),
   async (req, res) => {
     const { name, email, bio } = req.body;
 
