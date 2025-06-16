@@ -37,4 +37,4 @@ function validateAndSanitize(schema, options = {}) {
   };
 }
 
-module.exports = validateAndSanitize;
+module.exports = validateSanitize;
