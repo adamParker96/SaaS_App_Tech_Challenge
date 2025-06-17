@@ -8,7 +8,7 @@ const Slack = require('../validation-sanitation/validationSanitation)
  * @param {Object} options - Optional configuration
  *        options.sanitize: array of field names to sanitize (default: [])
  */
-function validateAndSanitize(schema, options = {}) {
+function validateSanitize(schema, options = {}) {
   return (req, res, next) => {
     const { error, value } = schema.validate(req.body, { abortEarly: false, stripUnknown: true });
 
