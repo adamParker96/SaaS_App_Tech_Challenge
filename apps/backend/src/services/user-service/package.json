@@ -2,10 +2,10 @@
   "name": "user-service",
   "version": "1.0.0",
   "description": "Knowledge base microservice for CRUD operations on users",
-  "main": "src/server.js",
+  "main": "source/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "node source/server.js",
+    "dev": "nodemon source/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
