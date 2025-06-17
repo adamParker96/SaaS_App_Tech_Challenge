@@ -90,3 +90,12 @@ async function updateUser(req, res) {
     res.status(400).json({ error: err.message });
   }
 }
+
+module.exports = {
+  getAllUsers,
+  getUserByID,
+  getUserByEmail,
+  createUser,
+  deleteUser,
+  updateUser
+};
