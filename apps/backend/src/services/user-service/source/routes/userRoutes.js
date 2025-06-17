@@ -30,19 +30,19 @@ router.get('/id/:id', async (req, res) => {
   }
 });
 
-// GET /users/name/:name - get user by name
-router.get('/name/:name', async (req, res) => {
+// GET /users/name/:name - get user by email
+router.get('/email/:email', async (req, res) => {
   try {
-    const user = await getUserByName(req.params.name);
+    const user = await getUserByName(req.params.email);
     if (!user) return res.status(404).json({ error: 'User not found' });
     res.json(user);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch user by name' });
+    res.status(500).json({ error: 'Failed to fetch user by email' });
   }
 });
 
 // POST /users - create a new user
-router.post('/', async (req, res) => {
+router.post('/', validate(createUserSchema), async (req, res) => {
   const { name, id, email } = req.body;
   try {
     const newUser = await createUser({ name, id, email });
@@ -63,7 +63,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // PUT /users/:id - update a user
-router.put('/:id', async (req, res) => {
+router.put('/:id', validate(updateUserSchema), async (req, res) => {
   const { name, email } = req.body;
   try {
     const updatedUser = await updateUser(req.params.id, { name, email });
