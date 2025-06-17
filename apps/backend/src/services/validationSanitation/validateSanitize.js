@@ -12,6 +12,7 @@ function validateAndSanitize(schema, options = {}) {
     const { error, value } = schema.validate(req.body, { abortEarly: false, stripUnknown: true });
 
     if (error) {
+      //TODO - send message to IT SEC on failed validation
       return res.status(400).json({
         error: 'Validation failed',
         details: error.details.map((e) => e.message),
