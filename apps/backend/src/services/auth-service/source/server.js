@@ -70,13 +70,20 @@ app.get("/callback", async (req, res) => {
     const tokenSet = await client.callback(
       process.env.OKTA_REDIRECT_URI,
       params,
-      { code_verifier: req.session.codeVerifier }
+      { code_verifier: req.cookies.codeVerifier } // or URL param/state
     );
 
-    req.session.tokenSet = tokenSet;
-    req.session.userinfo = await client.userinfo(tokenSet.access_token);
+    // Optional: create a custom JWT here if you don't want to use Okta's ID token
+    // const jwt = jwt.sign(payload, secret, { expiresIn: '1h' });
 
-    res.redirect("/protected");
+    res.cookie("id_token", tokenSet.id_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 3600000
+    });
+
+    res.redirect(process.env.FRONTEND_URL); // redirect to your React app
   } catch (err) {
     console.error("OIDC callback error:", err);
     res.status(500).send("Authentication failed.");
