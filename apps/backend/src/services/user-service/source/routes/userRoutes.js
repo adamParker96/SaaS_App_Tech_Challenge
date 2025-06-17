@@ -5,7 +5,7 @@ const validateSanitize = require('../validation-sanitation/validationSanitation'
 const {
   getAllUsers,
   getUserByID,
-  getUserByName,
+  getUserByEmail,
   createUser,
   deleteUser,
   updateUser
@@ -18,7 +18,7 @@ router.get('/', getAllUsers);
 router.get('/id/:id', getUserByID);
 
 //  GET /users/name/:name - Get user by name (with caching)
-router.get('/name/:name', getUserByName);
+router.get('/email/:email', getUserByName);
 
 //  POST /users - Create a new user
 router.post(
