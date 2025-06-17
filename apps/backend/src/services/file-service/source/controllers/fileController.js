@@ -78,8 +78,11 @@ exports.update = async (req, res) => {
 exports.remove = async (req, res) => {
   const id = req.params.id;
 
-  await File.deleteFile(id);
-
+  const deletedCount = await File.deleteFile(id);
+  if (deletedCount === 0) {
+    return res.status(404).json({ error: 'File not found' });
+  }
+  
   // Invalidate relevant caches
   await Promise.all([
     cache.del('files:all'),
