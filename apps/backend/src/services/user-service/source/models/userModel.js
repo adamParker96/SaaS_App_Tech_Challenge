@@ -10,7 +10,7 @@ async function getUserByID(id) {
   return rows[0];
 }
 
-async function getUserByEmail(name){
+async function getUserByEmail(email){
   const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
   return rows[0];
 }
