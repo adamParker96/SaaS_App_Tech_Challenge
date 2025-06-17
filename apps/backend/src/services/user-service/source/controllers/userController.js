@@ -60,6 +60,8 @@ async function getUserByEmail(req, res) {
 async function createUser(req, res) {
   try {
     const user = await User.createUser(req.body);
+    await cache.del('user:all');  //  new user in the house! destroy our old cache for 'all'
+    await cache.del(`user:${req.params.id}`);  //  shouldn't be anything here, but it doesn't hurt to clear it
     res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -74,7 +76,8 @@ async function deleteUser(req, res) {
     if (deletedCount === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
-
+    await cache.del('user:all');  //  the queen is dead, long live the queen! destroy our old cache for 'all'
+    await cache.del(`user:${req.params.id}`);  //  free up some cache space
     res.status(204).send();  //  success, no content
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete user' });
@@ -85,6 +88,8 @@ async function deleteUser(req, res) {
 async function updateUser(req, res) {
   try {
     const user = await User.updateUser(req.params.id, req.body);
+    await cache.del('user:all');  //  updates have been made. destroy our old cache for 'all'
+    await cache.del(`user:${req.params.id}`);  //  delete the old cached info for the user
     res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
