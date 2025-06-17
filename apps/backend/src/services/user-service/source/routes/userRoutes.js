@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { createUserSchema, updateUserSchema } = require('../schemas/userSchema');
+const validateSanitize = require('../validation-sanitation/validationSanitation');
 const {
   getAllUsers,
   getUserByID,
@@ -42,7 +44,7 @@ router.get('/email/:email', async (req, res) => {
 });
 
 // POST /users - create a new user
-router.post('/', validate(createUserSchema), async (req, res) => {
+router.post('/', validateSanitize(createUserSchema, { sanitize: ['name', 'email'] }), async (req, res) => {
   const { name, id, email } = req.body;
   try {
     const newUser = await createUser({ name, id, email });
@@ -63,7 +65,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // PUT /users/:id - update a user
-router.put('/:id', validate(updateUserSchema), async (req, res) => {
+router.put('/:id', validateSanitize(updateUserSchema, { sanitize: ['name', 'email'] }), async (req, res) => {
   const { name, email } = req.body;
   try {
     const updatedUser = await updateUser(req.params.id, { name, email });
