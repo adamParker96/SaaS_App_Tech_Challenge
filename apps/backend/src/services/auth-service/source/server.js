@@ -4,6 +4,7 @@ const { Issuer, generators } = require("openid-client");
 const RedisStore = require("connect-redis").default;
 const Redis = require("ioredis");
 require("dotenv").config();
+const checkJwt = require("./oktaAuth");
 
 const app = express();
 app.use(express.json());
@@ -90,20 +91,12 @@ app.get("/callback", async (req, res) => {
   }
 });
 
-// Middleware to protect routes
-function requireAuth(req, res, next) {
-  if (!req.session || !req.session.tokenSet) {
-    return res.redirect("/login");
-  }
-  next();
-}
-
 app.get("/public", (req, res) => {
   res.send("This route is public.");
 });
 
-app.get("/protected", requireAuth, (req, res) => {
-  res.send(`Hello ${req.session.userinfo.name}, you're authenticated!`);
+app.get("/jwt-protected", checkJwt, (req, res) => {
+  res.send(`Hello ${req.auth.sub}, your token is valid.`);
 });
 
 app.get("/logout", (req, res) => {
