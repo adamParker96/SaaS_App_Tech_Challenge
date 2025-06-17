@@ -8,7 +8,7 @@ router.get('/:id', controller.getById);
 router.get('/name/:filename', controller.getByName);
 
 // Create
-router.post('/', controller.upload); // assumes middleware like multer for file handling
+router.post('/', controller.upload); //  TODO: add middleware like multer for file handling
 
 // Update
 router.put('/:id', controller.update);
