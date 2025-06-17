@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { createUserSchema } = require('../schemas/userSchema');
-const validateAndSanitize = require('../validationSanitation/validateSanitize');
+const validateSanitize = require('../validationSanitation/validateSanitize');
 
 router.post(
   '/create',
