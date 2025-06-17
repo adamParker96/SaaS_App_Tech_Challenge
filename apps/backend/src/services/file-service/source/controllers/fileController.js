@@ -3,26 +3,16 @@
 const File = require('../models/fileModel');
 const cache = require('../cache');
 
-exports.getAll = async (req, res) => {  //  get all files (might nuke this one tbh)
+exports.getAll = async (req, res) => {
+  const cached = await cache.get('files:all');
+  if (cached) return res.json(JSON.parse(cached));
+
   const files = await File.getAllFiles();
+  await cache.set('files:all', JSON.stringify(files), { EX: 3600 });
   res.json(files);
 };
 
-
-exports.getByName = async (req, res) => {
-  const filename = req.params.filename;
-  const cached = await cache.get(`file:name:${filename}`);
-  if (cached) return res.json(JSON.parse(cached));
-
-  const file = await File.getFileByName(filename);
-  if (!file) return res.status(404).send("File not found");
-
-  await cache.set(`file:name:${filename}`, JSON.stringify(file), { EX: 3600 });
-  res.json(file);
-};
-
-
-exports.getById = async (req, res) => {  //  get file by ID
+exports.getById = async (req, res) => {
   const id = req.params.id;
   const cached = await cache.get(`file:${id}`);
   if (cached) return res.json(JSON.parse(cached));
@@ -34,21 +24,60 @@ exports.getById = async (req, res) => {  //  get file by ID
   res.json(file);
 };
 
+exports.getByName = async (req, res) => {
+  const filename = req.params.filename;
+  const cached = await cache.get(`file:name:${filename}`);
+  if (cached) return res.json(JSON.parse(cached));
 
-exports.upload = async (req, res) => {  //  upload file
-  //  assume file upload already handled by middleware
+  const file = await File.getFileByName(filename);
+  if (!file) return res.status(404).send("Not found");
+
+  await cache.set(`file:name:${filename}`, JSON.stringify(file), { EX: 3600 });
+  res.json(file);
+};
+
+exports.upload = async (req, res) => {
   const { filename, mimetype, location: url } = req.file;
   const metadata = await File.insertFile({
     filename,
     mime_type: mimetype,
     url,
-    uploaded_by: req.body.uploaded_by, //  you get this from token in real usage
+    uploaded_by: req.body.uploaded_by,
   });
+
+  // Invalidate cache
+  await cache.del('files:all');
 
   res.status(201).json(metadata);
 };
 
-exports.remove = async (req, res) => {  //  delete file
-  await File.deleteFile(req.params.id);
+exports.update = async (req, res) => {
+  const id = req.params.id;
+  const { filename, mime_type, url } = req.body;
+
+  const updated = await File.updateFile(id, { filename, mime_type, url });
+  if (!updated) return res.status(404).send("Not found");
+
+  // Invalidate relevant caches
+  await Promise.all([
+    cache.del('files:all'),
+    cache.del(`file:${id}`),
+    cache.del(`file:name:${filename}`),
+  ]);
+
+  res.json(updated);
+};
+
+exports.remove = async (req, res) => {
+  const id = req.params.id;
+
+  await File.deleteFile(id);
+
+  // Invalidate relevant caches
+  await Promise.all([
+    cache.del('files:all'),
+    cache.del(`file:${id}`),
+  ]);
+
   res.sendStatus(204);
 };
