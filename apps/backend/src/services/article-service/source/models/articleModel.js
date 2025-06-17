@@ -11,7 +11,7 @@ async function getArticleById(id) {
 }
 
 async function getArticleByName(title) {
-  const { rows } = await db.query('SELECT * FROM articles WHERE id = $1', [title]);
+  const { rows } = await db.query('SELECT * FROM articles WHERE title = $1', [title]);
   return rows[0];
 }
 
