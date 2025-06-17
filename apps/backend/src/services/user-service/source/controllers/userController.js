@@ -1,9 +1,8 @@
 const User = require('../models/userModel');
 const cache = require('../cache');
 
-async function getAllUsers(req, res) {
 
-  
+async function getAllUsers(req, res) {
   // Try cache first
   let user = await cache.get(`user:all`);
   if (user) {
@@ -38,6 +37,7 @@ async function getUserByID(req, res) {
   res.json(user);
 }
 
+
 async function getUserByName(req, res) {
   const { name } = req.params;
   
@@ -47,7 +47,7 @@ async function getUserByName(req, res) {
     return res.json(JSON.parse(user));
   }
 
-  user = await User.getUserById(id);
+  user = await User.getUserByName(name);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
   // Cache user
@@ -55,6 +55,7 @@ async function getUserByName(req, res) {
 
   res.json(user);
 }
+
 
 async function createUser(req, res) {
   try {
@@ -65,18 +66,20 @@ async function createUser(req, res) {
   }
 }
 
+
 async function deleteUser(req, res) {
   try {
-    const user = await User.deleteUser(req.id);
+    const user = await User.deleteUser(req.params.id);
     res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 }
 
+
 async function updateUser(req, res) {
   try {
-    const user = await User.updateUser(req.body);
+    cconst user = await User.updateUser(req.params.id, req.body);
     res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
