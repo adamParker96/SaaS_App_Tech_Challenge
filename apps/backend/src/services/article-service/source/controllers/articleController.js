@@ -28,7 +28,7 @@ exports.getArticleByName = async (req, res) => {  //  get a specific article via
   const article = await Article.getArticleByName(title)
   if (!article) return res.status(404).send("Not found");
 
-  await cache.set(`article:${id}`, JSON.stringify(article), { EX: 3600 });
+  await cache.set(`article:${title}`, JSON.stringify(article), { EX: 3600 });
   res.json(article);
 };
 
