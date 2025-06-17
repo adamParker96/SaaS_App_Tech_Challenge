@@ -11,69 +11,30 @@ const {
   updateUser
 } = require('../controllers/userController');
 
-// GET /users - get all users
-router.get('/', async (req, res) => {
-  try {
-    const users = await getAllUsers();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch users' });
-  }
-});
+//  GET /users - Get all users (with caching)
+router.get('/', getAllUsers);
 
-// GET /users/id/:id - get user by ID
-router.get('/id/:id', async (req, res) => {
-  try {
-    const user = await getUserByID(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json(user);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch user by ID' });
-  }
-});
+//  GET /users/id/:id - Get user by ID (with caching)
+router.get('/id/:id', getUserByID);
 
-// GET /users/name/:name - get user by email
-router.get('/email/:email', async (req, res) => {
-  try {
-    const user = await getUserByName(req.params.email);
-    if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json(user);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch user by email' });
-  }
-});
+//  GET /users/name/:name - Get user by name (with caching)
+router.get('/name/:name', getUserByName);
 
-// POST /users - create a new user
-router.post('/', validateSanitize(createUserSchema, { sanitize: ['name', 'email'] }), async (req, res) => {
-  const { name, id, email } = req.body;
-  try {
-    const newUser = await createUser({ name, id, email });
-    res.status(201).json(newUser);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to create user' });
-  }
-});
+//  POST /users - Create a new user
+router.post(
+  '/',
+  validateSanitize(createUserSchema, { sanitize: ['name', 'email'] }),
+  createUser
+);
 
-// DELETE /users/:id - delete a user
-router.delete('/:id', async (req, res) => {
-  try {
-    await deleteUser(req.params.id);
-    res.status(204).send();
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete user' });
-  }
-});
+//  PUT /users/:id - Update a user
+router.put(
+  '/:id',
+  validateSanitize(updateUserSchema, { sanitize: ['name', 'email'] }),
+  updateUser
+);
 
-// PUT /users/:id - update a user
-router.put('/:id', validateSanitize(updateUserSchema, { sanitize: ['name', 'email'] }), async (req, res) => {
-  const { name, email } = req.body;
-  try {
-    const updatedUser = await updateUser(req.params.id, { name, email });
-    if (!updatedUser) return res.status(404).json({ error: 'User not found' });
-    res.json(updatedUser);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update user' });
-  }
-});
+// DELETE  /users/:id - Delete a user
+router.delete('/:id', deleteUser);
 
 module.exports = router;
