@@ -17,8 +17,8 @@ router.get('/', getAllUsers);
 //  GET /users/id/:id - Get user by ID (with caching)
 router.get('/id/:id', getUserByID);
 
-//  GET /users/name/:name - Get user by name (with caching)
-router.get('/email/:email', getUserByName);
+//  GET /users/name/:name - Get user by email (with caching)
+router.get('/email/:email', getUserByEmail);
 
 //  POST /users - Create a new user
 router.post(
