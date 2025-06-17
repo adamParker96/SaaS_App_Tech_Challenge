@@ -35,7 +35,8 @@ async function updateFile(id, { filename, mime_type, url }) {
 }
 
 async function deleteFile(id) {
-  await db.query('DELETE FROM files WHERE id = $1', [id]);
+  const result = await db.query('DELETE FROM files WHERE id = $1', [id]);
+  return result.rowCount;
 }
 
 module.exports = {
