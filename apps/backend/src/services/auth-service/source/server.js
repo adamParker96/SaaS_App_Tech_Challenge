@@ -73,9 +73,6 @@ app.get("/callback", async (req, res) => {
       { code_verifier: req.cookies.codeVerifier } // or URL param/state
     );
 
-    // Optional: create a custom JWT here if you don't want to use Okta's ID token
-    // const jwt = jwt.sign(payload, secret, { expiresIn: '1h' });
-
     res.cookie("id_token", tokenSet.id_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
