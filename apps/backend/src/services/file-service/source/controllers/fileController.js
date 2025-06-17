@@ -8,6 +8,20 @@ exports.getAll = async (req, res) => {  //  get all files (might nuke this one t
   res.json(files);
 };
 
+
+exports.getByName = async (req, res) => {
+  const filename = req.params.filename;
+  const cached = await cache.get(`file:name:${filename}`);
+  if (cached) return res.json(JSON.parse(cached));
+
+  const file = await File.getFileByName(filename);
+  if (!file) return res.status(404).send("File not found");
+
+  await cache.set(`file:name:${filename}`, JSON.stringify(file), { EX: 3600 });
+  res.json(file);
+};
+
+
 exports.getById = async (req, res) => {  //  get file by ID
   const id = req.params.id;
   const cached = await cache.get(`file:${id}`);
@@ -20,7 +34,6 @@ exports.getById = async (req, res) => {  //  get file by ID
   res.json(file);
 };
 
-//TODO: get file by Name
 
 exports.upload = async (req, res) => {  //  upload file
   //  assume file upload already handled by middleware
