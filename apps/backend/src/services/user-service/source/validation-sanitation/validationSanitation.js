@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const sanitizeHtml = require('sanitize-html');
+const Slack = require('../validation-sanitation/validationSanitation)
 
 /**
  * Middleware to validate and sanitize request body using Joi schema.
@@ -12,6 +13,7 @@ function validateAndSanitize(schema, options = {}) {
     const { error, value } = schema.validate(req.body, { abortEarly: false, stripUnknown: true });
 
     if (error) {
+      //TODO - send slack message to ITSEC on failed validation
       return res.status(400).json({
         error: 'Validation failed',
         details: error.details.map((e) => e.message),
