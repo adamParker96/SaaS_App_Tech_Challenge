@@ -37,22 +37,20 @@ exports.getByName = async (req, res) => {
 };
 
 exports.upload = async (req, res) => {
-  //  validated and sanitized req.body
-  const { uploaded_by } = req.body;
+//  validated and sanitized req.body
+const { uploaded_by } = req.body;
+const { filename, mimetype, location: url } = req.file;
 
-  //  File upload info from middleware (e.g. multer or other)
-  const { filename, mimetype, location: url } = req.file;
+if (!filename || !mimetype || !url || !uploaded_by) {
+  return res.status(400).json({ message: "Missing file or metadata fields" });
+}
 
-  if (!filename || !mimetype || !url) {
-    return res.status(400).json({ message: "File data missing from upload" });
-  }
-
-  const metadata = await File.insertFile({
-    filename,
-    mime_type: mimetype,
-    url,
-    uploaded_by,
-  });
+const metadata = await File.insertFile({
+  filename,
+  mime_type: mimetype,
+  url,
+  uploaded_by,
+});
 
   // Invalidate cache
   await cache.del('files:all');
