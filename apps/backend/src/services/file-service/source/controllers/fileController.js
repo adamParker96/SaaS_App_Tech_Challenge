@@ -37,12 +37,21 @@ exports.getByName = async (req, res) => {
 };
 
 exports.upload = async (req, res) => {
+  //  validated and sanitized req.body
+  const { uploaded_by } = req.body;
+
+  //  File upload info from middleware (e.g. multer or other)
   const { filename, mimetype, location: url } = req.file;
+
+  if (!filename || !mimetype || !url) {
+    return res.status(400).json({ message: "File data missing from upload" });
+  }
+
   const metadata = await File.insertFile({
     filename,
     mime_type: mimetype,
     url,
-    uploaded_by: req.body.uploaded_by,
+    uploaded_by,
   });
 
   // Invalidate cache
@@ -62,7 +71,7 @@ exports.update = async (req, res) => {
   await Promise.all([
     cache.del('files:all'),
     cache.del(`file:${id}`),
-    cache.del(`file:name:${filename}`),
+    filename ? cache.del(`file:name:${filename}`) : Promise.resolve(),
   ]);
 
   res.json(updated);
