@@ -38,20 +38,20 @@ async function getUserByID(req, res) {
 }
 
 
-async function getUserByName(req, res) {
-  const { name } = req.params;
+async function getUserByEmail(req, res) {
+  const { email } = req.params;
   
   // Try cache first
-  let user = await cache.get(`user:${name}`);
+  let user = await cache.get(`user:${email}`);
   if (user) {
     return res.json(JSON.parse(user));
   }
 
-  user = await User.getUserByName(name);
+  user = await User.getUserByEmail(email);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
   // Cache user
-  await cache.set(`user:${name}`, JSON.stringify(user), { EX: 3600 }); // 1 hour expiry
+  await cache.set(`user:${email}`, JSON.stringify(user), { EX: 3600 }); // 1 hour expiry
 
   res.json(user);
 }
