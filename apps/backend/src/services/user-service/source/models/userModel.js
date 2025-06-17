@@ -10,8 +10,8 @@ async function getUserByID(id) {
   return rows[0];
 }
 
-async function getUserByName(name){
-  const { rows } = await db.query('SELECT * FROM users WHERE name = $1', [name]);
+async function getUserByEmail(name){
+  const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
   return rows[0];
 }
 
