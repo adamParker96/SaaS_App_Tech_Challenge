@@ -1,8 +1,5 @@
 const fetch = require('node-fetch');
 
-const SLACK_BOT_TOKEN = 'xoxb-your-slack-bot-token';
-const CHANNEL_ID = 'C1234567890'; // Replace with actual channel ID
-
 async function sendSlackMessage(text) {
   const response = await fetch('https://slack.com/api/chat.postMessage', {
     method: 'POST',
