@@ -1,4 +1,4 @@
-onst db = require('../db');
+const db = require('../db');
 
 async function getAllFiles() {
   const { rows } = await db.query('SELECT * FROM files ORDER BY created_at DESC');
