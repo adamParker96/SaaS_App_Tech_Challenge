@@ -28,7 +28,7 @@ async function getUserByID(req, res) {
     return res.json(JSON.parse(user));
   }
 
-  user = await User.getUserById(id);
+  user = await User.getUserByID(id);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
   // Cache user
