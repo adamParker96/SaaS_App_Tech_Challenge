@@ -79,7 +79,7 @@ async function deleteUser(req, res) {
 
 async function updateUser(req, res) {
   try {
-    cconst user = await User.updateUser(req.params.id, req.body);
+    const user = await User.updateUser(req.params.id, req.body);
     res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
