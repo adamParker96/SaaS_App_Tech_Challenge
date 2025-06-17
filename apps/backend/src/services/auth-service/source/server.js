@@ -45,6 +45,9 @@ let client;
   } catch (err) {
     console.error("Failed to initialize OIDC client:", err);
   }
+  if (!client) {
+  return res.status(500).send("OIDC client not initialized.");
+}
 })();
 
 // Login endpoint — uses PKCE
