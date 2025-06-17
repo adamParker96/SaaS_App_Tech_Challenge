@@ -108,9 +108,5 @@ app.get("/logout", (req, res) => {
     res.send("You have been logged out.");
   });
 });
-app.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.send("You have been logged out.");
-});
 
 app.listen(6000, () => console.log("Server running on port 6000"));
