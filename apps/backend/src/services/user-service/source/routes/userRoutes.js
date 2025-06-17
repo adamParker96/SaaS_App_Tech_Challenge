@@ -9,7 +9,7 @@ const {
   createUser,
   deleteUser,
   updateUser
-} = require('../models/userModel'); // adjust path if needed
+} = require('../controllers/userController');
 
 // GET /users - get all users
 router.get('/', async (req, res) => {
