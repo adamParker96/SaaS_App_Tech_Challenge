@@ -1,4 +1,4 @@
-const db = require('../db');
+onst db = require('../db');
 
 async function getAllFiles() {
   const { rows } = await db.query('SELECT * FROM files ORDER BY created_at DESC');
@@ -10,8 +10,8 @@ async function getFileById(id) {
   return rows[0];
 }
 
-async function getFileByName(title){
-  const { rows } = await db.query('SELECT * FROM files WHERE id = $1', [title]);
+async function getFileByName(filename) {
+  const { rows } = await db.query('SELECT * FROM files WHERE filename = $1', [filename]);
   return rows[0];
 }
 
@@ -23,8 +23,26 @@ async function insertFile({ filename, mime_type, url, uploaded_by }) {
   return rows[0];
 }
 
+async function updateFile(id, { filename, mime_type, url }) {
+  const { rows } = await db.query(
+    `UPDATE files 
+     SET filename = $1, mime_type = $2, url = $3 
+     WHERE id = $4 
+     RETURNING *`,
+    [filename, mime_type, url, id]
+  );
+  return rows[0];
+}
+
 async function deleteFile(id) {
   await db.query('DELETE FROM files WHERE id = $1', [id]);
 }
 
-module.exports = { getAllFiles, getFileById, getFileByName, insertFile, deleteFile };
+module.exports = {
+  getAllFiles,
+  getFileById,
+  getFileByName,
+  insertFile,
+  updateFile,
+  deleteFile,
+};
