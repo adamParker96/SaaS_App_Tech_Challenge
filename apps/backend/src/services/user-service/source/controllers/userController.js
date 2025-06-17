@@ -51,7 +51,7 @@ async function getUserByName(req, res) {
   if (!user) return res.status(404).json({ error: 'User not found' });
 
   // Cache user
-  await cache.set(`user:${id}`, JSON.stringify(user), { EX: 3600 }); // 1 hour expiry
+  await cache.set(`user:${name}`, JSON.stringify(user), { EX: 3600 }); // 1 hour expiry
 
   res.json(user);
 }
