@@ -69,10 +69,15 @@ async function createUser(req, res) {
 
 async function deleteUser(req, res) {
   try {
-    const user = await User.deleteUser(req.params.id);
-    res.status(201).json(user);
+    const deletedCount = await User.deleteUser(req.params.id);
+    
+    if (deletedCount === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(204).send();  //  success, no content
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: 'Failed to delete user' });
   }
 }
 
