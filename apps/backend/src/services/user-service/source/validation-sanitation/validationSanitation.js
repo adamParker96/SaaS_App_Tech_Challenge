@@ -13,7 +13,7 @@ function validateSanitize(schema, options = {}) {
     const { error, value } = schema.validate(req.body, { abortEarly: false, stripUnknown: true });
 
     if (error) {
-      //TODO - send slack message to ITSEC on failed validation
+      Slack("User has attempted to input invalid text: ${req.body}");
       return res.status(400).json({
         error: 'Validation failed',
         details: error.details.map((e) => e.message),
