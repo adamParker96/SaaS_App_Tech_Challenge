@@ -27,4 +27,12 @@ async function deleteUser(id) {
   await db.query('DELETE FROM users WHERE id = $1', [id]);
 }
 
+async function updateUser(id, { name, email }) {
+  const { rows } = await db.query(
+    'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *',
+    [name, email, id]
+  );
+  return rows[0];
+}
+
 module.exports = { getAllUsers, getUserByID, getUserByName, createUser, deleteUser, updateUser };
