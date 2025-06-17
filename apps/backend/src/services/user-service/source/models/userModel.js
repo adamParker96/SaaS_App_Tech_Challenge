@@ -25,7 +25,7 @@ async function createUser({ name, id, email}) {
 
 async function deleteUser(id) {
   const result = await db.query('DELETE FROM users WHERE id = $1', [id]);
-  return result.rowCount  //  returns # of rows deleted (0 or 1)
+  return result.rowCount;  //  returns # of rows deleted (0 or 1)
 }
 
 async function updateUser(id, { name, email }) {
