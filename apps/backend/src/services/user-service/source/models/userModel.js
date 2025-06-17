@@ -36,4 +36,4 @@ async function updateUser(id, { name, email }) {
   return rows[0];
 }
 
-module.exports = { getAllUsers, getUserByID, getUserByName, createUser, deleteUser, updateUser };
+module.exports = { getAllUsers, getUserByID, getUserByEmail, createUser, deleteUser, updateUser };
