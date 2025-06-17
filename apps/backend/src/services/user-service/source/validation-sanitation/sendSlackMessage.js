@@ -23,3 +23,4 @@ async function sendSlackMessage(text) {
     console.log('Message sent:', data.ts);
   }
 }
+module.exports = sendSlackMessage;
