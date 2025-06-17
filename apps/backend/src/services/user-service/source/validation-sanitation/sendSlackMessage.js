@@ -1,4 +1,4 @@
-const fetch = require('node-fetch'); // If using Node 18+, you can use global fetch
+const fetch = require('node-fetch');
 
 const SLACK_BOT_TOKEN = 'xoxb-your-slack-bot-token';
 const CHANNEL_ID = 'C1234567890'; // Replace with actual channel ID
