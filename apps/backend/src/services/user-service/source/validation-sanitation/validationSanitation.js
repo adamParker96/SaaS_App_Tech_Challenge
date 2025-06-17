@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const sanitizeHtml = require('sanitize-html');
-const Slack = require('../validation-sanitation/sendSlackMessage)
+const Slack = require('../validation-sanitation/sendSlackMessage')
 
 /**
  * Middleware to validate and sanitize request body using Joi schema.
@@ -10,9 +10,9 @@ const Slack = require('../validation-sanitation/sendSlackMessage)
  */
 function validateSanitize(schema, options = {}) {
   return (req, res, next) => {
-   const { error } = schema.validate(req.body, { abortEarly: false });
+   const { error, value } = schema.validate(req.body, { abortEarly: false });
     if (error) {
-      Slack("User has attempted to input invalid text: ${req.body}");
+      Slack('User has attempted to input invalid text: ${req.body}');
       return res.status(400).json({
         error: 'Validation failed',
         details: error.details.map((e) => e.message),
