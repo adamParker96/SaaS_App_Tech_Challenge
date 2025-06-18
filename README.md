@@ -3,14 +3,14 @@ For my interview with Autodesk, I was asked to design and create a SaaS applicat
 
 ---------------------------------------------------------
 
-High Level overview:
+## High Level overview:
 
 ![Application Architecture Diagram](https://github.com/user-attachments/assets/ec32d0ae-a2f4-4bc8-94c5-c91508b63ad8)
 
 
 ---------------------------------------------------------
 
-Flow:
+## Flow:
 
 The KnowledgeBase uses a React app hosted on S3 + Cloudfront to dynamically pull data from our backend, 3 dockerized services written in Node.js + Express that are hosted on an ECS cluster. 
 It is locked behind our Auth service, which redirects a user to login via Okta before being redirected to the KnowledgeBase after a successful callback. 
@@ -19,7 +19,7 @@ Once they have returned to the KnowledgeBase, they can make API calls to our bac
 ---------------------------------------------------------
 
 
-Our Tech Stack:
+## Our Tech Stack:
 
 Frontend Framework: Written in React with TailwindCSS
 
@@ -37,37 +37,37 @@ Cloud Services:	AWS ECS, AWS S3, AWS ALB, AWS RDS, Cloudfront, Okta, Redis
 
 ---------------------------------------------------------
 
-User Authentication:
+## User Authentication:
 
 Upon first accessing the KnowledgeBase, the user is asked to login via Okta - upon successful login, Okta will return a JWT (JSON Web Token) for us - we verify this using Okta's JWKS endpoint, and upon successful verification the user is redirected to the 'protected' page of the KnowledgeBase.
 
 ---------------------------------------------------------
 
-User Service:
+## User Service:
 
 This service allows us to perform CRUD operations on users in our 'Users' table. API Documentation can be found in /apps/backend/src/services/user-service
 
 ---------------------------------------------------------
 
-Article Service:
+## Article Service:
 
 This service allows users to perform CRUD operations on articles in our 'Articles' table. API Documentation can be found in /apps/backend/src/services/article-service
 
 ---------------------------------------------------------
 
-File Service:
+## File Service:
 
 This service allows users to perform CRUD operations on files in our 'Files' table. API Documentation can be found in /apps/backend/src/services/file-service
 
 ---------------------------------------------------------
 
-Integrations:
+## Integrations:
 
 Whenever a user attempts to input data that doesn't meet validation checks set in our JOI schema, an alert is sent to a Slack group (in this scenario it's ITSEC) alerting them that someone is attempting to pass invalid data to our DB.
 
 ---------------------------------------------------------
 
-Security:
+## Security:
 
 Data is protected in transit via HTTPS - our frontend is hosted in S3 and distributed via CloudFront (AWS's Contend Delivery Network), which gives us HTTPS support, and our backend is hosted on ECS with ALB (Application Load Balancing) configured, giving us HTTPS support.
 
@@ -79,14 +79,14 @@ To add: JWT checks on each API call via frontend - right now the Auth process fi
 I'd like to take the JWT that okta returns us and use that to authorize API calls for users, instead of just assuming that the user is good to go after logging in.
 (IE: after the user logs into Okta, store the JWT in cookies. Then, take the JWT verification middleware we use in the Auth service, and implement it into each of our services' routes:
 
-// POST /users - Create a new user
+```// POST /users - Create a new user
 router.post(
   '/',
   checkJWT,
   validateSanitize(createUserSchema, { sanitize: ['name', 'email'] }),
   createUser
 );
-
+```
 This will make access to our backend much more secure, and allow us to block access to unauthorized parties attempting to access the API without using the frontend.
 
 Data validation is done using the JOI javascript library and schemas created for each service allowing us to ensure that input matches expected types and formats.
@@ -97,7 +97,7 @@ XSS is prevented by using the santize-html javascript library, which allows us t
 
 ---------------------------------------------------------
 
-Performance:
+## Performance:
 
 We use Redis on ECS as a read-through cache to reduce database load and improve response times for frequently accessed data. This allows us to feed users frequently requested data without hitting our PostgreSQL database.
 
@@ -110,19 +110,19 @@ CREATE INDEX idx_files_user_id ON files (user_id);
 
 ---------------------------------------------------------
 
-Deployment: 
+## Deployment: 
 
 Deployment information for the frontend and backend can be found in their respective /source/ folders. Instructions on how to setup and create our PostgreSQL database via RDS can be found in /infra/amazon-rds/.
 
 ---------------------------------------------------------
 
-Known Issues:
+## Known Issues:
 
 .env and package.json() files based off a boilerplate - need to go through and make sure that the correct ports are exposed and the correct paths are being referenced.
 
 ---------------------------------------------------------
 
-To add:
+## If I had more time (TODO):
 
 Currently there is only one API key that is allowed to make mutating calls to our service - creating a database of API keys and their corresponding users will allow us to have more granular access control.
 
