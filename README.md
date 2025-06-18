@@ -31,7 +31,7 @@ The KnowledgeBase uses a React app hosted on S3 + Cloudfront to dynamically pull
 
 ---------------------------------------------------------
 
-Auth Service:
+User Authentication:
 
 Upon first accessing the KnowledgeBase, the user is asked to login via Okta - upon successful login, Okta will return a JWT (JSON Web Token) for us - we verify this using Okta's JWKS endpoint, and upon successful verification the user is redirected to the 'protected' page of the KnowledgeBase.
 
@@ -39,19 +39,19 @@ Upon first accessing the KnowledgeBase, the user is asked to login via Okta - up
 
 User Service:
 
-This service allows us to perform CRUD operations on users in our 'Users' table
+This service allows us to perform CRUD operations on users in our 'Users' table. API Documentation can be found in /apps/backend/src/services/user-service
 
 ---------------------------------------------------------
 
 Article Service:
 
-This service allows users to perform CRUD operations on articles in our 'Articles' table
+This service allows users to perform CRUD operations on articles in our 'Articles' table. API Documentation can be found in /apps/backend/src/services/article-service
 
 ---------------------------------------------------------
 
-Files Service:
+File Service:
 
-This service allows users to perform CRUD operations on files in our 'Files' table
+This service allows users to perform CRUD operations on files in our 'Files' table. API Documentation can be found in /apps/backend/src/services/file-service
 
 ---------------------------------------------------------
 
@@ -64,7 +64,10 @@ Data at rest is protected natively by AWS - S3 encrypts all its stored data.
 Currently the routes for each service are set up so that only the user that passes the API key that matches the one in our .env file will be able to make calls to routes that mutate our data (POST, PATCH, DEL) - reading data is public.
 
 Data validation is done using the JOI javascript library and schemas created for each service allowing us to ensure that input matches expected types and formats.
+
 SQL injection is prevented by using parameterized SQL queries (ie await db.query('SELECT * FROM users WHERE id = $1', [id]);) in each of our services' models.
+
+XSS is prevented by using the santize-html javascript library, which allows us to define allowed tags and attributes that can be passed to our backend.
 
 ---------------------------------------------------------
 
