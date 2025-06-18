@@ -90,6 +90,12 @@ CREATE INDEX idx_files_user_id ON files (user_id);
 
 ---------------------------------------------------------
 
+Deployment: 
+
+Deployment information for the frontend and backend can be found in their respective /source/ folders. Instructions on how to setup and create our PostgreSQL database via RDS can be found in /infra/amazon-rds/.
+
+---------------------------------------------------------
+
 Known Issues:
 
 .env and package.json() files based off a boilerplate - need to go through and make sure that the correct ports are exposed and the correct paths are being referenced.
