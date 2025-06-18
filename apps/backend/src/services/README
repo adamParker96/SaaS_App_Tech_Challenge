@@ -1,0 +1,29 @@
+Deployment instructions:
+
+---
+
+Deploy services to ECS
+
+Prerequisites:
+
+- Docker installed
+- AWS CLI configured (`aws configure`)
+- An ECS cluster created (Fargate, with appropriate VPC/Subnets/Security Groups)
+- A PostgreSQL database and Redis instance accessible to the services
+- IAM roles for ECS tasks
+- ECR repositories for each service
+
+---
+
+1. Build and Push Docker Images to ECR
+
+Repeat for each service:
+
+```bash
+# Auth example
+cd apps/backend/src/services/auth-service
+aws ecr create-repository --repository-name auth-service
+aws ecr get-login-password | docker login --username AWS --password-stdin <account_id>.dkr.ecr.<region>.amazonaws.com
+docker build -t auth-service .
+docker tag auth-service:latest <account_id>.dkr.ecr.<region>.amazonaws.com/auth-service:latest
+docker push <account_id>.dkr.ecr.<region>.amazonaws.com/auth-service:latest
