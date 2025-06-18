@@ -14,13 +14,13 @@ const {
 //  Apply API Key check to all user routes
 router.use(checkApiKey);
 
-//  GET /users - Get all users (with caching)
+//  GET /users - Get all users 
 router.get('/', getAllUsers);
 
-//  GET /users/id/:id - Get user by ID (with caching)
+//  GET /users/id/:id - Get user by ID 
 router.get('/id/:id', getUserByID);
 
-//  GET /users/name/:name - Get user by email (with caching)
+//  GET /users/name/:name - Get user by email
 router.get('/email/:email', getUserByEmail);
 
 //  POST /users - Create a new user
