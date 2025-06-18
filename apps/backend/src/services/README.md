@@ -111,9 +111,7 @@ Repeat this process for each microservice.
 
 ---
 
-## Step 5: Configuring Load Balancer (Optional)
-
-If you wish to expose your services via a load balancer:
+## Step 5: Configuring Load Balancer
 
 1. **Create an Application Load Balancer (ALB)** in the EC2 console.
 2. **Create a target group** for each service (Auth, User, Knowledge Page, File).
