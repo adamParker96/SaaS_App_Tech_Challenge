@@ -61,6 +61,12 @@ This service allows users to perform CRUD operations on files in our 'Files' tab
 
 ---------------------------------------------------------
 
+Integrations:
+
+Whenever a user attempts to input data that doesn't meet validation checks set in our JOI schema, an alert is sent to a Slack group (in this scenario it's ITSEC) alerting them that someone is attempting to pass invalid data to our DB.
+
+---------------------------------------------------------
+
 Security:
 
 Data is protected in transit via HTTPS - our frontend is hosted in S3 and distributed via CloudFront (AWS's Contend Delivery Network), which gives us HTTPS support, and our backend is hosted on ECS with ALB (Application Load Balancing) configured, giving us HTTPS support.
@@ -109,6 +115,8 @@ Currently there is only one API key that is allowed to make mutating calls to ou
 File upload validation not currently implemented - I would like to make it so that only specific file types are allowed for upload, and that those files get scanned before being uploaded to our S3 bucket(s).
 
 Roles for users - this would allow us to implement RBAC into the system
+
+Frontend - super bare bones, currently just lets users make API calls and downloads the data for them. Would like to add a search feature, and also create a page that dynamically displays data depending on what the user searched for.
 
 JWT checks on each API call via frontend - right now the Auth process finishes once the user logs in via Okta. I'd like to take the JWT that okta returns us and use that to authorize API calls for users, instead of just assuming that the user is good to go after logging in.
 
