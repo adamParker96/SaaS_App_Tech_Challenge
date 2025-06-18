@@ -5,6 +5,7 @@ const Protected = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [apiMessage, setApiMessage] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [selectedService, setSelectedService] = useState("users");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,13 +24,24 @@ const Protected = () => {
     e.preventDefault();
 
     const accessToken = (await authClient.tokenManager.get("accessToken"))?.accessToken;
-    const res = await fetch("http://localhost:6000/jwt-protected", {
+
+    const serviceMap = {
+      users: "http://localhost:6000/users-api",
+      articles: "http://localhost:6000/articles-api",
+      files: "http://localhost:6000/files-api",
+    };
+
+    const res = await fetch(serviceMap[selectedService], {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
+      body: JSON.stringify({ input: inputValue }),
     });
+
     const data = await res.json();
-    setApiMessage(data.message);
+    setApiMessage(data.message || JSON.stringify(data));
   };
 
   return (
@@ -37,13 +49,40 @@ const Protected = () => {
       <h1 className="text-2xl font-bold mb-2">Protected Page</h1>
       <p className="mb-4">Welcome, {userInfo?.email}</p>
 
+      <div className="mb-4 space-x-2">
+        <button
+          className={`px-4 py-2 rounded ${
+            selectedService === "users" ? "bg-blue-600 text-white" : "bg-gray-200"
+          }`}
+          onClick={() => setSelectedService("users")}
+        >
+          Users
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${
+            selectedService === "articles" ? "bg-blue-600 text-white" : "bg-gray-200"
+          }`}
+          onClick={() => setSelectedService("articles")}
+        >
+          Articles
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${
+            selectedService === "files" ? "bg-blue-600 text-white" : "bg-gray-200"
+          }`}
+          onClick={() => setSelectedService("files")}
+        >
+          Files
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit} className="mb-4">
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Type something to call the API"
-          className="border border-gray-300 px-3 py-2 rounded mr-2"
+          placeholder="Type something"
+          className="border border-gray-300 px-3 py-2 rounded mr-2 w-80"
         />
         <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
           Submit
@@ -54,7 +93,7 @@ const Protected = () => {
         Logout
       </button>
 
-      {apiMessage && <p className="mt-4">{apiMessage}</p>}
+      {apiMessage && <p className="mt-4 whitespace-pre-line">{apiMessage}</p>}
     </div>
   );
 };
