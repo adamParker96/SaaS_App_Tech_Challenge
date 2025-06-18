@@ -7,7 +7,17 @@ High Level overview:
 
 ![Application Architecture Diagram](https://github.com/user-attachments/assets/ec32d0ae-a2f4-4bc8-94c5-c91508b63ad8)
 
+
 ---------------------------------------------------------
+
+Flow:
+
+The KnowledgeBase uses a React app hosted on S3 + Cloudfront to dynamically pull data from our backend, 3 dockerized services written in Node.js + Express that are hosted on an ECS cluster. 
+It is locked behind our Auth service, which redirects a user to login via Okta before being redirected to the KnowledgeBase after a successful callback. 
+Once they have returned to the KnowledgeBase, they can make API calls to our backend and retrieve data.
+
+---------------------------------------------------------
+
 
 Our Tech Stack:
 
@@ -24,10 +34,6 @@ Cache:	Redis
 Containerization:	Docker + ECS
 
 Cloud Services:	AWS ECS, AWS S3, AWS ALB, AWS RDS, Cloudfront, Okta, Redis
-
----------------------------------------------------------
-
-The KnowledgeBase uses a React app hosted on S3 + Cloudfront to dynamically pull data from our backend, 3 dockerized services written in Node.js + Express that are hosted on an ECS cluster. It is locked behind our Auth service, which redirects a user to login via Okta before being redirected to the KnowledgeBase after a successful callback. Once they have returned to the KnowledgeBase, they can make API calls to our backend and retrieve data.
 
 ---------------------------------------------------------
 
