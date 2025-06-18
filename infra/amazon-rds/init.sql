@@ -6,7 +6,13 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Knowledge Pages Table
+-- Index for filtering by user
+CREATE INDEX idx_files_user_id ON files (user_id);
+
+-- Optional: Index if you sort/filter by filename or mimetype
+CREATE INDEX idx_files_filename ON files (filename);
+
+-- Article Pages Table
 CREATE TABLE articles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
@@ -15,6 +21,15 @@ CREATE TABLE articles (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Index on user_id for filtering by author
+CREATE INDEX idx_articles_user_id ON articles (user_id);
+
+-- Index for fast search by title (especially if using LIKE or ILIKE)
+CREATE INDEX idx_articles_title ON articles (title);
+
+-- Index for sorting
+CREATE INDEX idx_articles_created_at ON articles (created_at);
 
 -- Files Table
 CREATE TABLE files (
@@ -25,3 +40,10 @@ CREATE TABLE files (
   page_id UUID REFERENCES knowledge_pages(id) ON DELETE CASCADE,
   uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Index for filtering by user
+CREATE INDEX idx_files_user_id ON files (user_id);
+
+-- Optional: Index if you sort/filter by filename or mimetype
+CREATE INDEX idx_files_filename ON files (filename);
+
