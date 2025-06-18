@@ -151,4 +151,6 @@ Frontend - super bare bones, currently just lets users make API calls and downlo
 
 Miro - I'd like to create a page in the frontend where users can create pages via the frontend, including allowing them to connect to Miro and import flowcharts into our File table.
 
+Workflows - automatically pushing docker images to ECR on updates to main branch.
+
 
