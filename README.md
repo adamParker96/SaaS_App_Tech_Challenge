@@ -133,6 +133,8 @@ File upload validation not currently implemented - I would like to make it so th
 
 Roles for users - this would allow us to implement RBAC into the system
 
+Slack notifications only send when someone attempts to send bad data to the User API - i would like to implement this feature into the Files and Articles APIs as well.
+
 Frontend - super bare bones, currently just lets users make API calls and downloads the data for them. Would like to add a search feature, and also create a page that dynamically displays data depending on what the user searched for.
 
 Miro - I'd like to create a page in the frontend where users can create pages via the frontend, including allowing them to connect to Miro and import flowcharts into our File table.
