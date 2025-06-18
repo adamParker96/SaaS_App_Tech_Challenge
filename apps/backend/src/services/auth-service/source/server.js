@@ -96,7 +96,7 @@ app.get("/public", (req, res) => {
 });
 
 app.get("/jwt-protected", checkJwt, (req, res) => {
-  res.send(`Hello ${req.auth.sub}, your token is valid.`);
+  res.send(`Hello ${req.auth.email}, your token is valid.`);
 });
 
 app.get("/logout", (req, res) => {
