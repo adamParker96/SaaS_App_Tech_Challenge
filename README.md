@@ -14,7 +14,7 @@ For my interview with Autodesk, I was asked to design and create a SaaS applicat
 
 The KnowledgeBase uses a React app hosted on S3 + Cloudfront to dynamically pull data from our backend, 3 dockerized services written in Node.js + Express that are hosted on an ECS cluster. 
 It is locked behind our Auth service, which redirects a user to login via Okta before being redirected to the KnowledgeBase after a successful callback. 
-Once they have returned to the KnowledgeBase, they can make API calls to our backend and retrieve data.
+Once they have returned to the KnowledgeBase, they can make API calls to our backend and create, retrieve, update, and delete data.
 
 ---------------------------------------------------------
 
