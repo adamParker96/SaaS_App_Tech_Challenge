@@ -1,15 +1,15 @@
-# 📘 User Service API Documentation
+# User Service API Documentation
 
 **Base URL**: `http://<host>:3001/users`
 
-## 🔐 Authentication
+## Authentication
 **Header** (for protected routes):
 
 ```
 x-api-key: your-very-secret-api-key
 ```
 
-## 📥 Common User Object
+## Common User Object
 ```json
 {
   "id": "uuid-v4-string",
@@ -18,9 +18,9 @@ x-api-key: your-very-secret-api-key
 }
 ```
 
-## 📚 Endpoints
+## Endpoints
 
-### ✅ GET `/users`
+### GET `/users`
 Retrieve **all users**.
 **Response**: `200 OK`
 ```json
@@ -33,7 +33,7 @@ Retrieve **all users**.
 ]
 ```
 
-### ✅ GET `/users/id/:id`
+### GET `/users/id/:id`
 Retrieve a user by **UUID**.
 **Response**: `200 OK`
 ```json
@@ -44,7 +44,7 @@ Retrieve a user by **UUID**.
 }
 ```
 
-### ✅ GET `/users/email/:email`
+### GET `/users/email/:email`
 Retrieve a user by **email**.
 **Response**: `200 OK`
 ```json
@@ -55,7 +55,7 @@ Retrieve a user by **email**.
 }
 ```
 
-### 🔒 POST `/users`
+### POST `/users`
 Create a new user.
 **Headers**:
 ```
@@ -79,7 +79,7 @@ Content-Type: application/json
 }
 ```
 
-### 🔒 PUT `/users/:id`
+### PUT `/users/:id`
 Update an existing user.
 **Request Body**:
 ```json
@@ -90,18 +90,18 @@ Update an existing user.
 ```
 **Response**: `201 Created`
 
-### 🔒 DELETE `/users/:id`
+### DELETE `/users/:id`
 Delete a user by ID.
 **Response**: `204 No Content`
 
-## 💾 Caching
+## Caching
 - Responses for GET endpoints are cached for 1 hour.
 - Mutations clear affected cache entries.
 
-## 🚨 Slack Integration
+## Slack Integration
 Invalid input triggers Slack alert.
 
-## 🧪 Example cURL Commands
+## Example cURL Commands
 
 ### Create a User
 ```bash
