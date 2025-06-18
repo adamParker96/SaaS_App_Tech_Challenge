@@ -33,7 +33,7 @@ Cache:	Redis
 
 Containerization:	Docker + ECS
 
-Cloud Services:	AWS ECS, AWS S3, AWS ALB, AWS RDS, Cloudfront, Okta, Redis
+Cloud Services:	AWS ECS, AWS S3, AWS ALB, AWS RDS, AWS ECR, Cloudfront, Okta, Redis
 
 ---------------------------------------------------------
 
