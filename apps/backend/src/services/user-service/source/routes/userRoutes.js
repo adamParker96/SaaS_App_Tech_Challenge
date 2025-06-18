@@ -11,6 +11,9 @@ const {
   updateUser
 } = require('../controllers/userController');
 
+//  Apply API Key check to all user routes
+router.use(checkApiKey);
+
 //  GET /users - Get all users (with caching)
 router.get('/', getAllUsers);
 
