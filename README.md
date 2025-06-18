@@ -68,6 +68,19 @@ SQL injection is prevented by using parameterized SQL queries (ie await db.query
 
 ---------------------------------------------------------
 
+Performance:
+
+We use Redis on ECS as a read-through cache to reduce database load and improve response times for frequently accessed data. This allows us to feed users frequently requested data without hitting our PostgreSQL database.
+
+For our database, we use indexing to speed up data retrieval by marking important keys as indexes, allowing us to avoid scanning every row in a table for results. (Please see the infra/amazons-rds/init.sql for more)
+
+Example:
+-- Index for filtering by user
+CREATE INDEX idx_files_user_id ON files (user_id);
+
+
+---------------------------------------------------------
+
 To add:
 
 Currently there is only one API key that is allowed to make mutating calls to our service - creating a database of API keys and their corresponding users will allow us to have more granular access control.
