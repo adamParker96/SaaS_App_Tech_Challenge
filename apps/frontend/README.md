@@ -12,17 +12,35 @@
 
 ## Step 1: Build the React Application
 
-1. Navigate to the root directory of your frontend project.
-2. Run the following command to create a production build:
-   ```bash
-   npm run build
-   ```
+```
+# Dockerfile
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# The static files are now in /app/build
+```
 
 This will generate a `build/` directory containing all the static files needed for deployment.
 
 ---
 
-## Step 2: Create an S3 Bucket
+## Step 2: Build Docker Image and Extract Build:
+
+```
+docker build -t my-frontend .
+docker create --name extract-container my-frontend
+docker cp extract-container:/app/build ./build
+docker rm extract-container
+```
+You now have your static site in the ./build folder locally.
+
+---
+
+## Step 3: Create an S3 Bucket
 
 1. **Go to S3 Console** and click **Create bucket**.
 2. Provide a unique name for the bucket and select the AWS region where the bucket will reside.
@@ -34,7 +52,7 @@ This will generate a `build/` directory containing all the static files needed f
 
 ---
 
-## Step 3: Upload Build Files to S3
+## Step 4: Upload Build Files to S3
 
 1. Open the `build/` directory created earlier by running `npm run build`.
 2. Go to your S3 bucket, click on **Upload**, and select all files and folders inside the `build/` directory.
