@@ -35,7 +35,7 @@ DB:	PostgreSQL (created w/ RDS)
 
 Cache:	Redis
 
-Containerization:	Docker + ECS
+Containerization:	Docker + ECR
 
 Cloud Services:	AWS ECS, AWS S3, AWS ALB, AWS RDS, AWS ECR, Cloudfront, Okta, Redis
 
