@@ -60,7 +60,7 @@ You now have your static site in the ./build folder locally.
 
 ---
 
-## Step 4: Configure CloudFront
+## Step 5: Configure CloudFront
 
 CloudFront helps to serve your static files with better performance and caching.
 
@@ -71,7 +71,7 @@ CloudFront helps to serve your static files with better performance and caching.
 
 ---
 
-## Step 5: Set Up DNS for Custom Domain (Optional)
+## Step 6: Set Up DNS for Custom Domain (Optional)
 
 1. If you have a custom domain, use **Route 53** or any other DNS provider to point your domain to the CloudFront distribution:
    - Create a **CNAME** record to point `www.yourdomain.com` to the CloudFront URL.
