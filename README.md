@@ -46,6 +46,7 @@ Upon first accessing the KnowledgeBase, the user is asked to login via Okta - up
 ## User Service:
 
 This service allows us to perform CRUD operations on users in our 'Users' table. 
+
 API Documentation can be found in /apps/backend/src/services/user-service
 
 ---------------------------------------------------------
@@ -53,6 +54,7 @@ API Documentation can be found in /apps/backend/src/services/user-service
 ## Article Service:
 
 This service allows users to perform CRUD operations on articles in our 'Articles' table. 
+
 API Documentation can be found in /apps/backend/src/services/article-service
 
 ---------------------------------------------------------
@@ -60,11 +62,12 @@ API Documentation can be found in /apps/backend/src/services/article-service
 ## File Service:
 
 This service allows users to perform CRUD operations on files in our 'Files' table. 
+
 API Documentation can be found in /apps/backend/src/services/file-service
 
 ---------------------------------------------------------
 
-## Integrations:
+## Slack integration:
 
 Whenever a user attempts to input data that doesn't meet validation checks set in our JOI schema, an alert is sent to a Slack group (in this scenario it's ITSEC) alerting them that someone is attempting to pass invalid data to our DB.
 
