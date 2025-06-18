@@ -127,7 +127,3 @@ If you have a custom domain:
 1. Set up **Route 53** or another DNS service to point your domain to the ALB for backend services.
 
 ---
-
-## Conclusion
-
-Once all the steps are completed, your backend microservices will be up and running on ECS. Optionally, you can configure the ALB for routing, and DNS for domain mapping.
