@@ -90,6 +90,12 @@ CREATE INDEX idx_files_user_id ON files (user_id);
 
 ---------------------------------------------------------
 
+Known Issues:
+
+.env and package.json() files based off a boilerplate - need to go through and make sure that the correct ports are exposed and the correct paths are being referenced.
+
+---------------------------------------------------------
+
 To add:
 
 Currently there is only one API key that is allowed to make mutating calls to our service - creating a database of API keys and their corresponding users will allow us to have more granular access control.
