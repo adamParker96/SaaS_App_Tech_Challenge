@@ -59,9 +59,26 @@ Prerequisites:
 
 ------------------------------------
 
-3.Register each task:
+3. Register each task:
 
 bash
 Copy
 Edit
 aws ecs register-task-definition --cli-input-json file://task-definition.json
+
+------------------------------------
+
+4. Create ECS Services
+Use Fargate with your cluster and VPC subnets:
+
+bash
+Copy
+Edit
+aws ecs create-service \
+  --cluster my-cluster \
+  --service-name auth-service \
+  --task-definition auth-service-task \
+  --launch-type FARGATE \
+  --network-configuration 'awsvpcConfiguration={subnets=["subnet-xyz"],securityGroups=["sg-xyz"],assignPublicIp="ENABLED"}'
+
+Repeat for all 4 services.
