@@ -77,8 +77,8 @@ Currently the routes for each service are set up so that only the user that pass
 
 To add: JWT checks on each API call via frontend - right now the Auth process finishes once the user logs in via Okta.
 I'd like to take the JWT that okta returns us and use that to authorize API calls for users, instead of just assuming that the user is good to go after logging in.
-(IE: after the user logs into Okta, store the JWT in cookies. Then, take the JWT verification middleware we use in the Auth service, and implement it into each of our services' routes:
 
+(IE: after the user logs into Okta, store the JWT in cookies. Then, take the JWT verification middleware we use in the Auth service (oktaAuth.js) , and implement it into each of our services' routes:
 ```// POST /users - Create a new user
 router.post(
   '/',
