@@ -63,10 +63,15 @@ Data at rest is protected natively by AWS - S3 encrypts all its stored data.
 
 Currently the routes for each service are set up so that only the user that passes the API key that matches the one in our .env file will be able to make calls to routes that mutate our data (POST, PATCH, DEL) - reading data is public.
 
+Data validation is done using the JOI javascript library and schemas created for each service allowing us to ensure that input matches expected types and formats.
+SQL injection is prevented by using parameterized SQL queries (ie await db.query('SELECT * FROM users WHERE id = $1', [id]);) in each of our services' models.
+
 ---------------------------------------------------------
 
+To add:
 
-
----------------------------------------------------------
-
+Currently there is only one API key that is allowed to make mutating calls to our service - creating a database of API keys and their corresponding users will allow us to have more granular access control.
+File upload validation not currently implemented - I would like to make it so that only specific file types are allowed for upload, and that those files get scanned before being uploaded to our S3 bucket(s).
+Roles for users - this would allow us to implement RBAC into the system
+JWT checks on each API call via frontend - right now the Auth process finishes once the user logs in via Okta. I'd like to take the JWT that okta returns us and use that to authorize API calls for users, instead of just assuming that the user is good to go after logging in.
 
