@@ -61,6 +61,12 @@ Data is protected in transit via HTTPS - our frontend is hosted in S3 and distri
 
 Data at rest is protected natively by AWS - S3 encrypts all its stored data.
 
+Currently the routes for each service are set up so that only the user that passes the API key that matches the one in our .env file will be able to make calls to routes that mutate our data (POST, PATCH, DEL) - reading data is public.
+
+---------------------------------------------------------
+
+
+
 ---------------------------------------------------------
 
 
