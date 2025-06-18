@@ -71,7 +71,10 @@ SQL injection is prevented by using parameterized SQL queries (ie await db.query
 To add:
 
 Currently there is only one API key that is allowed to make mutating calls to our service - creating a database of API keys and their corresponding users will allow us to have more granular access control.
+
 File upload validation not currently implemented - I would like to make it so that only specific file types are allowed for upload, and that those files get scanned before being uploaded to our S3 bucket(s).
+
 Roles for users - this would allow us to implement RBAC into the system
+
 JWT checks on each API call via frontend - right now the Auth process finishes once the user logs in via Okta. I'd like to take the JWT that okta returns us and use that to authorize API calls for users, instead of just assuming that the user is good to go after logging in.
 
