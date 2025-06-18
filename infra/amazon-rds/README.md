@@ -67,7 +67,7 @@ Deploy ECS Services:
 
 After updating your ECS task definition, redeploy your ECS service. This ensures the application can connect to the RDS instance using the new environment variables.
 
-##Step 4: Test Connection from ECS
+## Step 4: Test Connection from ECS
 Ensure that your ECS services are able to connect to the RDS instance by checking the application logs.
 
 If the connection fails, ensure:
@@ -78,7 +78,7 @@ Your ECS task is correctly using the environment variables for the database conn
 
 Your RDS instance is in the correct VPC and subnet.
 
-##Step 5: (Optional) Enable RDS IAM Authentication (for extra security)
+## Step 5: (Optional) Enable RDS IAM Authentication (for extra security)
 For added security, you can use IAM-based authentication to connect to your RDS instance instead of storing credentials in environment variables.
 
 Enable IAM DB authentication in the RDS Console when creating or modifying the database.
