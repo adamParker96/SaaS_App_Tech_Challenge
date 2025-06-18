@@ -75,6 +75,20 @@ Data at rest is protected natively by AWS - S3 encrypts all its stored data.
 
 Currently the routes for each service are set up so that only the user that passes the API key that matches the one in our .env file will be able to make calls to routes that mutate our data (POST, PATCH, DEL) - reading data is public.
 
+To add: JWT checks on each API call via frontend - right now the Auth process finishes once the user logs in via Okta.
+I'd like to take the JWT that okta returns us and use that to authorize API calls for users, instead of just assuming that the user is good to go after logging in.
+(IE: after the user logs into Okta, store the JWT in cookies. Then, take the JWT verification middleware we use in the Auth service, and implement it into each of our services' routes:
+
+// POST /users - Create a new user
+router.post(
+  '/',
+  checkJWT,
+  validateSanitize(createUserSchema, { sanitize: ['name', 'email'] }),
+  createUser
+);
+
+This will make access to our backend much more secure, and allow us to block access to unauthorized parties attempting to access the API without using the frontend.
+
 Data validation is done using the JOI javascript library and schemas created for each service allowing us to ensure that input matches expected types and formats.
 
 SQL injection is prevented by using parameterized SQL queries (ie await db.query('SELECT * FROM users WHERE id = $1', [id]);) in each of our services' models.
@@ -120,5 +134,4 @@ Frontend - super bare bones, currently just lets users make API calls and downlo
 
 Miro - I'd like to create a page in the frontend where users can create pages via the frontend, including allowing them to connect to Miro and import flowcharts into our File table.
 
-JWT checks on each API call via frontend - right now the Auth process finishes once the user logs in via Okta. I'd like to take the JWT that okta returns us and use that to authorize API calls for users, instead of just assuming that the user is good to go after logging in.
 
