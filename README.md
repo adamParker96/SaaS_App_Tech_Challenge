@@ -30,13 +30,21 @@ Cloud Services:	AWS ECS, AWS S3, AWS ALB, AWS RDS, Cloudfront, Okta, Redis
 The KnowledgeBase uses a React app hosted on S3 + Cloudfront to dynamically pull data from our backend, 3 dockerized services written in Node.js + Express that are hosted on an ECS cluster. It is locked behind our Auth service, which redirects a user to login via Okta before being redirected to the KnowledgeBase after a successful callback.
 
 ---------------------------------------------------------
-
 Auth Service:
 
-Upon first accessing the KnowledgeBase, the user is asked to login via Okta - upon successful login, Okta will return a JWT for us - we verify this using Okta's JWKS endpoint, and upon successful verification the user is redirected to the 'protected' page of the KnowledgeBase.
+Upon first accessing the KnowledgeBase, the user is asked to login via Okta - upon successful login, Okta will return a JWT (JSON Web Token) for us - we verify this using Okta's JWKS endpoint, and upon successful verification the user is redirected to the 'protected' page of the KnowledgeBase.
 
 ---------------------------------------------------------
-
 User Service:
 
 This service allows us to perform CRUD operations on users in our 'Users' table
+
+---------------------------------------------------------
+Article Service:
+
+This service allows users to perform CRUD operations on articles in our 'Articles' table
+
+---------------------------------------------------------
+Files Service:
+
+This service allows users to perform CRUD operations on files in our 'Files' table
