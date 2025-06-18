@@ -114,9 +114,10 @@ We use Redis on ECS as a read-through cache to reduce database load and improve 
 For our database, we use indexing to speed up data retrieval by marking important keys as indexes, allowing us to avoid scanning every row in a table for results. (Please see the infra/amazons-rds/init.sql for more)
 
 Example:
+```
 -- Index for filtering by user
 CREATE INDEX idx_files_user_id ON files (user_id);
-
+```
 
 ---------------------------------------------------------
 
