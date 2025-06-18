@@ -18,7 +18,7 @@ Cache:	Redis
 
 Containerization:	Docker + ECS
 
-Cloud Services:	AWS ECS, AWS S3, Cloudfront, Okta, Redis
+Cloud Services:	AWS ECS, AWS S3, AWS ALB, AWS RDS, Cloudfront, Okta, Redis
 
 
 The User begins by accessing our website. They are then asked to login via Okta, and are redirected to the Okta login page. After successfully logging in, the Okta callback redirects our user to the homepage, where they can access the KB data by making calls to our backend via our APIs.
