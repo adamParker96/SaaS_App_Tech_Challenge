@@ -1,8 +1,11 @@
 # SaaS_App_Tech_Challenge
 For my interview with Autodesk, I was asked to design and create a SaaS application that met their criteria. I created a Knowledge Base tool (Confluence-esque) that uses an API-based backend to retrieve, create, and update data for frontend viewing.
 
+---------------------------------------------------------
+
 High Level overview:
-![Application Architecture Diagram](https://github.com/user-attachments/assets/7a1872be-9c66-469d-a765-b7b82058944f)
+
+![Application Architecture Diagram](https://github.com/user-attachments/assets/ec32d0ae-a2f4-4bc8-94c5-c91508b63ad8)
 
 ---------------------------------------------------------
 
