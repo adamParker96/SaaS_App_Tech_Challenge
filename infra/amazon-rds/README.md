@@ -84,3 +84,7 @@ For added security, you can use IAM-based authentication to connect to your RDS 
 Enable IAM DB authentication in the RDS Console when creating or modifying the database.
 
 In your ECS task definition, you would then configure the IAM role to allow your ECS task to authenticate to RDS via IAM.
+
+## Step 6: Run init.sql
+
+Transfer the init.sql file into your RDS instance and run the file to create our tables and indexes.
