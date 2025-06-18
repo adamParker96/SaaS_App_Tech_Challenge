@@ -1,0 +1,37 @@
+
+Example API calls:
+
+Create a User:
+
+bash
+Copy
+Edit
+curl -X POST http://localhost:3001/users \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-very-secret-api-key" \
+  -d '{
+    "id": "85e472de-47d1-4f3a-b2a9-8a6b2d760c89",
+    "name": "Alice",
+    "email": "alice@example.com"
+  }'
+
+Update a User:
+
+bash
+Copy
+Edit
+curl -X PUT http://localhost:3001/users/85e472de-47d1-4f3a-b2a9-8a6b2d760c89 \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-very-secret-api-key" \
+  -d '{
+    "name": "Alice Updated",
+    "email": "alice.new@example.com"
+  }'
+
+Delete a User:
+
+bash
+Copy
+Edit
+curl -X DELETE http://localhost:3001/users/85e472de-47d1-4f3a-b2a9-8a6b2d760c89 \
+  -H "x-api-key: your-very-secret-api-key"
