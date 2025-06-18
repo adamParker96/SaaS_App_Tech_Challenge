@@ -44,6 +44,12 @@ The File Service provides CRUD operations for managing files in the knowledge ba
 ]
 ```
 
+- **Example curl:**
+
+```bash
+curl -X GET http://<host>:4000/files
+```
+
 ---
 
 ### 2. Get File by ID
@@ -72,6 +78,12 @@ Example response:
 }
 ```
 
+- **Example curl:**
+
+```bash
+curl -X GET http://<host>:4000/files/1
+```
+
 ---
 
 ### 3. Get File by Filename
@@ -86,6 +98,12 @@ Example response:
   - **Status 200 OK**  
     JSON object with file details.
   - **Status 404 Not Found** if file does not exist.
+
+- **Example curl:**
+
+```bash
+curl -X GET http://<host>:4000/files/name/example.pdf
+```
 
 ---
 
@@ -130,6 +148,20 @@ Example response:
 }
 ```
 
+- **Example curl:**
+
+```bash
+curl -X POST http://<host>:4000/files \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-very-secret-api-key" \
+  -d '{
+    "filename": "example.pdf",
+    "mime_type": "application/pdf",
+    "url": "https://example.com/files/example.pdf",
+    "uploaded_by": "user123"
+  }'
+```
+
 ---
 
 ### 5. Update a File
@@ -160,6 +192,19 @@ Example response:
   - **Status 400 Bad Request** if validation fails
   - **Status 404 Not Found** if file ID does not exist
 
+- **Example curl:**
+
+```bash
+curl -X PUT http://<host>:4000/files/42 \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your-very-secret-api-key" \
+  -d '{
+    "filename": "newname.pdf",
+    "mime_type": "application/pdf",
+    "url": "https://example.com/files/newname.pdf"
+  }'
+```
+
 ---
 
 ### 6. Delete a File
@@ -173,6 +218,13 @@ Example response:
 - **Response:**
   - **Status 204 No Content** on success
   - **Status 404 Not Found** if file does not exist
+
+- **Example curl:**
+
+```bash
+curl -X DELETE http://<host>:4000/files/42 \
+  -H "x-api-key: your-very-secret-api-key"
+```
 
 ---
 
